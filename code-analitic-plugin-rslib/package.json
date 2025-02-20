@@ -1,0 +1,35 @@
+{
+  "name": "rf",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch",
+    "check": "biome check --write",
+    "format": "biome format --write",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@rslib/core": "^0.4.1",
+    "@types/node": "^22.8.1",
+    "chalk": "^5.4.1",
+    "glob": "^11.0.1",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  },
+  "private": true
+}

@@ -1,0 +1,10 @@
+.app-container {
+  width: 400px;
+  padding: 16px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.ant-card {
+  margin-bottom: 16px;
+}

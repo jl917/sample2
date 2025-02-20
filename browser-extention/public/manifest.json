@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Image Lister",
+  "version": "1.0",
+  "description": "Lists all images from the current webpage",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["assets/content.js"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "julong1988@naver.com"
+    }
+  }
+}
