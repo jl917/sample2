@@ -2,11 +2,16 @@ import chalk from "chalk";
 import path from "node:path";
 import { globSync } from "glob";
 
+const GLOB_PATTERN = ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx", "**/*.cjs", "**/*.mjs"]
+const IGNORE = ["**/node_modules/**"];
+
 // 플러그인 인터페이스 정의
 interface Plugin {
   name: string;
   run: (context: any) => Promise<void> | void;
 }
+
+type ParserType = 'babel' | 'swc';
 
 // 로거 레벨 타입 정의
 type LogLevel = "info" | "warn" | "error";
@@ -19,12 +24,17 @@ interface Logger {
 }
 
 class PluginManager {
-  private filePaths: string[] = [];
-  private plugins: Plugin[] = [];
   protected logger: Logger;
+  protected filePaths: string[] = [];
+  protected parser: ParserType;
 
-  constructor(globPattern: string | string[] = "**/*.js") {
-    globSync(globPattern);
+  private plugins: Plugin[] = [];
+
+  constructor(
+    { parser = 'babel', basePath = './src', globPattern = GLOB_PATTERN, ignore = IGNORE }: { parser?: ParserType, basePath?: string, globPattern?: string | string[], ignore?: string | string[] } = {}) {
+    // 검사할 파일들을 가져옴
+    this.parser = parser;
+    this.filePaths = globSync(globPattern, { cwd: path.resolve(basePath), ignore, }).map(e => path.resolve(basePath, e));
     // 기본 로거 구현 또는 커스텀 로거 사용
     this.logger = {
       info: (message: string) => console.log(`${chalk.green("[INFO]")} ${message}`),
